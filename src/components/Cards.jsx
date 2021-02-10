@@ -6,6 +6,7 @@ const Cards = ({ images }) => {
     image: "",
     isMached: false
   });
+ // console.log(images.length);
   const handleImageClick = (src) => {
     src === machedImage.image ? console.log("yes") : console.log("no");
     setMachedImage({
