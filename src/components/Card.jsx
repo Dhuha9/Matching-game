@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import '../style.scss'
-const Card = ({image}) => {
+import "../style.scss";
+const Card = ({ image, handleImageClick }) => {
   const [flipping, setFlipping] = useState({ flipped: false, clicked: false });
 
   const flip = () => {
+    handleImageClick(image);
     setFlipping({ flipped: !flipping.flipped, clicked: true });
   };
 
@@ -14,7 +15,10 @@ const Card = ({image}) => {
       <div className={"Card-Front" + flippedCSS}>
         <h3>Click Me</h3>
       </div>
-      <div className={"Card-Back" + flippedCSS}>  <img src={image} alt="" /></div>
+      <div className={"Card-Back" + flippedCSS}>
+        {" "}
+        <img src={image} alt="" />
+      </div>
     </div>
   );
 };
