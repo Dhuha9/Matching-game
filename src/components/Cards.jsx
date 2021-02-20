@@ -1,22 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
 const Cards = ({ images }) => {
-  const [machedImage, setMachedImage] = useState({
-    image: "",
-    isMached: false
-  });
- // console.log(images.length);
-  const handleImageClick = (src) => {
-    src === machedImage.image ? console.log("yes") : console.log("no");
+  const [machedImage, setMachedImage] = useState({});
+
+  useEffect(() => {
     setMachedImage({
-      image: src
+      id: "",
+      firstIndex: 0,
+      images: images
     });
+  }, [images]);
+
+  console.log(machedImage.images);
+  const handleImageClick = (id, indx) => {
+    id === machedImage.id
+      ? setMachedImage((prevState) => {
+          prevState.images.splice(indx, 1);
+          prevState.images.splice(prevState.firstIndex, 1);
+          return {
+            id: "",
+            firstIndex: 0,
+            images: prevState.images
+          };
+        })
+      : setMachedImage((prevState) => {
+          console.log("b", prevState);
+          prevState.id = id;
+          prevState.firstIndex = indx;
+          console.log("a", prevState);
+          return prevState;
+        });
+
     console.log("kk", machedImage);
   };
   return images
-    ? images.map((image) => (
-        <Card image={image.download_url} handleImageClick={handleImageClick} />
+    ? images.map((image, i) => (
+        <Card
+          indx={i}
+          image={image.download_url}
+          id={image.id}
+          handleImageClick={handleImageClick}
+        />
       ))
     : null;
 };
